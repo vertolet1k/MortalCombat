@@ -725,7 +725,10 @@ public class GUI extends javax.swing.JFrame {
                 }
             } else if (recordsCount >= 10 && minPoint < player.getPoints()) {
                 winnersTable.setAutoCreateRowSorter(true);
-                ((DefaultTableModel)winnersTable.getModel()).removeRow(-1);
+                DefaultTableModel model = (DefaultTableModel) winnersTable.getModel();
+                if (model.getRowCount() > 0) {
+                    model.removeRow(model.getRowCount() - 1);
+                }
                 addRecord();
             }
             int points = player.getPoints();
@@ -735,7 +738,7 @@ public class GUI extends javax.swing.JFrame {
             } else {
                 gameWindow.setVisible(false);
                 gameOverDialog.setVisible(true);
-                gameOverDialog.setBounds(100, 100, 300, 300);
+                gameOverDialog.setBounds(100, 100, 150, 150);
                 gameResultsLabel.setText("gameResults: " + points);
             }
         }
