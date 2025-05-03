@@ -5,20 +5,24 @@
 package playersInfo;
 
 /**
- *
+ * Класс, представляющий босса в игре Mortal Combat.
+ * Наследуется от класса Enemy и имеет особые характеристики.
+ * 
  * @author vika
+ * @version 1.0
  */
 public class Boss extends Enemy{
     
     /**
-     *
-     * @param name
-     * @param maxHealth
-     * @param attack
-     * @param behaviorType
+     * Создает нового босса с указанными характеристиками.
+     * 
+     * @param name имя босса
+     * @param maxHealth максимальное здоровье
+     * @param attack уровень атаки
+     * @param behaviorType тип поведения в бою
      */
     public Boss(String name, int maxHealth, int attack, int behaviorType) {
-        super(name, "Boss", maxHealth, attack, behaviorType);
+        super("Босс", name, maxHealth, attack, behaviorType);
     }
     
 }

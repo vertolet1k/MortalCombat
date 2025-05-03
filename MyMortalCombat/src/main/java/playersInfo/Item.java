@@ -5,25 +5,58 @@
 package playersInfo;
 
 /**
- *
+ * Класс, представляющий предмет в игре Mortal Combat.
+ * Содержит информацию о предмете и его характеристиках.
+ * 
  * @author vika
+ * @version 1.0
  */
 public class Item {
-    
+    /** Название предмета */
     private String name;
+    /** Тип предмета */
     private String type;
-    private int effectValue;
+    /** Эффективность предмета */
+    private int effectiveness;
 
     /**
-     *
-     * @param name
-     * @param type
-     * @param effectValue
+     * Создает новый предмет с указанными характеристиками.
+     * 
+     * @param name название предмета
+     * @param type тип предмета
+     * @param effectiveness эффективность предмета
      */
-    public Item(String name, String type, int effectValue) {
+    public Item(String name, String type, int effectiveness) {
         this.name = name;
         this.type = type;
-        this.effectValue = effectValue;
+        this.effectiveness = effectiveness;
+    }
+
+    /**
+     * Возвращает название предмета.
+     * 
+     * @return название предмета
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Возвращает тип предмета.
+     * 
+     * @return тип предмета
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Возвращает эффективность предмета.
+     * 
+     * @return эффективность предмета
+     */
+    public int getEffectiveness() {
+        return effectiveness;
     }
 
     /**
@@ -44,34 +77,9 @@ public class Item {
 
     /**
      *
-     * @param effectValue
+     * @param effectiveness
      */
-    public void setEffectValue(int effectValue) {
-        this.effectValue = effectValue;
+    public void setEffectiveness(int effectiveness) {
+        this.effectiveness = effectiveness;
     }
-
-    /**
-     *
-     * @return
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public int getEffectValue() {
-        return effectValue;
-    }
-    
 }

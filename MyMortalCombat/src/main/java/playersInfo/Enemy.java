@@ -5,99 +5,127 @@
 package playersInfo;
 
 /**
- *
+ * Класс, представляющий противника в игре Mortal Combat.
+ * Содержит информацию о характеристиках противника и его поведении в бою.
+ * 
  * @author vika
+ * @version 1.0
  */
 public class Enemy {
-    
-    private String name;
+    /** Тип противника */
     private String type;
+    /** Имя противника */
+    private String name;
+    /** Текущее здоровье */
     private int health;
+    /** Максимальное здоровье */
     private int maxHealth;
+    /** Уровень атаки */
     private int attack;
+    /** Тип поведения в бою */
     private int behaviorType;
-    private boolean defending;
+    /** Флаг защиты */
+    private boolean isDefending;
 
     /**
-     *
-     * @param name
-     * @param type
-     * @param maxHealth
-     * @param attack
-     * @param behaviorType
+     * Создает нового противника с указанными характеристиками.
+     * 
+     * @param type тип противника
+     * @param name имя противника
+     * @param maxHealth максимальное здоровье
+     * @param attack уровень атаки
+     * @param behaviorType тип поведения в бою
      */
-    public Enemy(String name, String type, int maxHealth, int attack, int behaviorType) {
-        this.name = name;
+    public Enemy(String type, String name, int maxHealth, int attack, int behaviorType) {
         this.type = type;
+        this.name = name;
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.attack = attack;
         this.behaviorType = behaviorType;
-        this.defending = false;
+        this.isDefending = false;
     }
 
     /**
-     *
-     * @param defending
-     */
-    public void setDefending(boolean defending) {
-        this.defending = defending;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public boolean isDefending() {
-        return defending;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     *
-     * @return
+     * Возвращает тип противника.
+     * 
+     * @return тип противника
      */
     public String getType() {
         return type;
     }
 
     /**
-     *
-     * @return
+     * Возвращает имя противника.
+     * 
+     * @return имя противника
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Возвращает текущее здоровье противника.
+     * 
+     * @return текущее здоровье
      */
     public int getHealth() {
         return health;
     }
 
     /**
-     *
-     * @return
+     * Устанавливает здоровье противника.
+     * Здоровье не может быть меньше 0 или больше максимального.
+     * 
+     * @param health новое значение здоровья
+     */
+    public void setHealth(int health) {
+        this.health = Math.max(0, Math.min(health, maxHealth));
+    }
+
+    /**
+     * Возвращает максимальное здоровье противника.
+     * 
+     * @return максимальное здоровье
      */
     public int getMaxHealth() {
         return maxHealth;
     }
 
     /**
-     *
-     * @return
+     * Возвращает уровень атаки противника.
+     * 
+     * @return уровень атаки
      */
     public int getAttack() {
         return attack;
     }
 
     /**
-     *
-     * @return
+     * Возвращает тип поведения противника в бою.
+     * 
+     * @return тип поведения
      */
     public int getBehaviorType() {
         return behaviorType;
+    }
+
+    /**
+     * Проверяет, находится ли противник в защите.
+     * 
+     * @return true, если противник в защите
+     */
+    public boolean isDefending() {
+        return isDefending;
+    }
+
+    /**
+     * Устанавливает состояние защиты противника.
+     * 
+     * @param defending новое состояние защиты
+     */
+    public void setDefending(boolean defending) {
+        isDefending = defending;
     }
 
     /**
@@ -114,14 +142,6 @@ public class Enemy {
      */
     public void setType(String type) {
         this.type = type;
-    }
-
-    /**
-     *
-     * @param health
-     */
-    public void setHealth(int health) {
-        this.health = health;
     }
 
     /**

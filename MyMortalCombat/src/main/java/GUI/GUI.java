@@ -11,32 +11,55 @@ import javax.swing.table.DefaultTableModel;
 import playersInfo.*;
 
 /**
- *
+ * Главный класс GUI для игры Mortal Combat.
+ * Предоставляет графический интерфейс для взаимодействия с игрой,
+ * включая боевую систему, инвентарь и таблицу рекордов.
+ * 
  * @author vika
+ * @version 1.0
  */
 public class GUI extends javax.swing.JFrame {
     
+    /** Игрок */
     private Player player;
+    /** Противник */
     private Enemy enemy;
+    /** Генератор случайных чисел */
     private Random random = new Random();
+    /** Количество побежденных врагов */
     private int enemiesDefeated;
+    /** Текущий уровень */
     private int currentLevel;
+    /** Флаг боя с боссом */
     private boolean bossFight = false;
+    /** Флаг использования креста возрождения */
     private boolean reviveCrossUsed = false;
+    /** Минимальное количество очков для попадания в таблицу рекордов */
     private int minPoint = 0;
+    /** Количество записей в таблице рекордов */
     private int recordsCount = 0;
+    /** Общее количество локаций */
     private int totalLocations;
+    /** Текущая локация */
     private int currentLocation;
+    /** Количество врагов в текущей локации */
     private int enemiesInLocation;
+    /** Количество побежденных врагов в текущей локации */
     private int enemiesDefeatedInLocation;
+    /** Флаг активного ослабления противника */
     private boolean debuffActive = false;
+    /** Количество ходов ослабления */
     private int debuffTurns = 0;
+    /** Урон, нанесенный игроком в последний ход */
     private int lastPlayerDamage = 0;
+    /** Последнее действие игрока */
     private String lastPlayerAction = "";
+    /** Флаг регенерации босса */
     private boolean bossRegenerating = false;
 
     /**
-     * Creates new form GUI
+     * Создает новый экземпляр GUI.
+     * Инициализирует все компоненты интерфейса.
      */
     public GUI() {
         initComponents();
@@ -494,6 +517,10 @@ public class GUI extends javax.swing.JFrame {
         tableWinnersDialog.setVisible(false);
     }//GEN-LAST:event_mainMenuButtonActionPerformed
     
+    /**
+     * Показывает игровую панель и инициализирует новую игру.
+     * Создает нового игрока с указанным именем и начинает первую локацию.
+     */
     private void showGamePanel() {
         String name = inputNameField.getText();
         if (name == null || name.trim().isEmpty()) name = "Игрок";
@@ -511,6 +538,10 @@ public class GUI extends javax.swing.JFrame {
         gameWindow.setBounds(10, 10, 800, 800);
     }
     
+    /**
+     * Начинает новую локацию.
+     * Генерирует врагов для текущей локации и сбрасывает необходимые флаги.
+     */
     private void startLocation() {
         currentLevel = currentLocation;
         enemiesInLocation = 2 + random.nextInt(4) + player.getLevel();
@@ -522,8 +553,12 @@ public class GUI extends javax.swing.JFrame {
         logArea.setText("Локация " + currentLocation + " из " + totalLocations + ". Врагов: " + enemiesInLocation + "\n");
     }
     
-    
-    
+    /**
+     * Генерирует нового противника.
+     * Если все обычные враги побеждены, генерирует босса.
+     * 
+     * @return новый экземпляр Enemy или Boss
+     */
     private Enemy generateEnemy() {
         if (enemiesDefeatedInLocation >= enemiesInLocation) {
             bossFight = true;
@@ -541,6 +576,12 @@ public class GUI extends javax.swing.JFrame {
         return new Enemy(type, type, maxHealth, attack, behavior);
     }
     
+    /**
+     * Определяет поведение врага в зависимости от его типа.
+     * 
+     * @param type тип врага
+     * @return код поведения (1-случайно атака/защита, 2-защита-атака-защита, 3-4 атаки)
+     */
     private int getEnemyBehavior(String type) {
         int roll = random.nextInt(100);
         switch (type) {
@@ -561,6 +602,10 @@ public class GUI extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Обновляет статистику игрока и противника на экране.
+     * Включает обновление полос здоровья и текстовых полей.
+     */
     private void updateStats() {
         playerStats.setText(String.format("%s | Локация: %d/%d | Уровень: %d | Здоровье: %d/%d | Урон: %d | Опыт: %d/%d | Очки: %d",
                 player.getName(), currentLocation, totalLocations, player.getLevel(), player.getHealth(), 
@@ -581,6 +626,11 @@ public class GUI extends javax.swing.JFrame {
         } 
     }
     
+    /**
+     * Обрабатывает ход игрока.
+     * 
+     * @param action действие игрока (attack, defend, skip, weaken)
+     */
     private void playerTurn(String action) {
         if (player.getHealth() <= 0 || enemy.getHealth() <= 0) return;
         lastPlayerAction = action;
@@ -662,6 +712,10 @@ public class GUI extends javax.swing.JFrame {
         enemyTurn();
     }
     
+    /**
+     * Обрабатывает ход противника.
+     * Определяет действие противника и наносит урон игроку.
+     */
     private void enemyTurn() {
         if (enemy.getHealth() <= 0) return;
         int move = getEnemyMove();
@@ -744,8 +798,12 @@ public class GUI extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Определяет следующее действие противника.
+     * 
+     * @return код действия (0-атака, 1-защита, 2-пропуск)
+     */
     private int getEnemyMove() {
-        // 0-атака, 1-защита, 2-пропуск
         int behavior = enemy.getBehaviorType();
         switch (behavior) {
             case 1: // случайно атака/защита
@@ -759,6 +817,9 @@ public class GUI extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Добавляет запись в таблицу рекордов.
+     */
     private void addRecord() {
         DefaultTableModel model = (DefaultTableModel) winnersTable.getModel();
         String name = player.getName();
@@ -766,6 +827,10 @@ public class GUI extends javax.swing.JFrame {
         model.addRow(new Object[] {name, points});
     }
     
+    /**
+     * Пытается выдать предмет игроку после победы над противником.
+     * Шанс выпадения предмета зависит от типа предмета.
+     */
     private void tryDropItem() {
         int roll = random.nextInt(100);
         if (roll < 25) {
@@ -780,6 +845,9 @@ public class GUI extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Показывает диалог инвентаря и позволяет использовать предметы.
+     */
     private void showInventoryDialog() {
         ArrayList<Item> items = player.getInventory();
         if (items.isEmpty()) {
@@ -799,6 +867,11 @@ public class GUI extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Использует выбранный предмет.
+     * 
+     * @param item предмет для использования
+     */
     private void useItem(Item item) {
         switch (item.getType()) {
             case "small_potion":
