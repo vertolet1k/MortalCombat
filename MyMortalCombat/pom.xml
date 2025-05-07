@@ -11,6 +11,13 @@
         <maven.compiler.target>22</maven.compiler.target>
         <exec.mainClass>com.mymortalcombat.MyMortalCombat</exec.mainClass>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.10.0</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
